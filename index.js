@@ -13,18 +13,13 @@ var babel       = require('metalsmith-babel');
 // Empty contents of build
 fsExtra.emptyDirSync(__dirname + '/build')
 
-// Babel options
-var babelOptions = {
-  presets: [["@babel/preset-env", { "targets": "defaults" }]]
-};
-
 // Metalsmith stuff
 Metalsmith(__dirname)
   .metadata({
-    title: "My Static Site & Blog",
-    description: "It's about saying »Hello« to the World.",
+    title: "Oaklandside voter district tool",
+    description: "What is your district?",
     generator: "Metalsmith",
-    url: "http://www.metalsmith.io/"
+    url: "https://www.oaklandside.org"
   })
   .source('./src')
   .destination('./build')
@@ -50,7 +45,7 @@ Metalsmith(__dirname)
     "suppressNotFoundError": true
   }))
   .use(serve())
-  .use(babel(babelOptions))
+  .use(babel())
   .build(function(err, files) {
     if (err) { throw err; }
   });

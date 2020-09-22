@@ -1,0 +1,125 @@
+.geocoder
+    position relative
+    display block
+
+.mapboxgl-ctrl-geocoder,
+.mapboxgl-ctrl-geocoder *,
+.mapboxgl-ctrl-geocoder :after,
+.mapboxgl-ctrl-geocoder :before
+    box-sizing border-box
+
+.mapboxgl-ctrl-geocoder
+    font 15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif
+    position relative
+    background-color #fff
+    width 33.3333%
+    min-width 240px
+    max-width 360px
+    z-index 1
+    border-radius 3px
+    min-width 100%
+    input[type=text]
+        font-size 12px
+        width 100%
+        border 0
+        background-color transparent
+        height 40px
+        margin 0
+        color rgba(0, 0, 0, .5)
+        padding 10px 10px 10px 40px
+        text-overflow ellipsis
+        white-space nowrap
+        overflow hidden
+    input
+        &:focus
+            color rgba(0, 0, 0, .75)
+            outline 0
+            box-shadow none
+            outline dotted thin\8
+    .geocoder-icon-search
+        position absolute
+        top 10px
+        left 10px
+    button
+        padding 0
+        margin 0
+        background-color #fff
+        border none
+        cursor pointer
+    .geocoder-pin-right
+        *
+            background-color #fff
+            z-index 2
+            position absolute
+            right 10px
+            top 10px
+            display none
+    ul
+        background-color #fff
+        border-radius 0 0 3px 3px
+        left 0
+        list-style none
+        margin 0
+        padding 0
+        position absolute
+        width 100%
+        top 100%
+        z-index 1000
+        overflow hidden
+        font-size 12px
+        & > li
+            & > a
+                clear both
+                cursor default
+                display block
+                padding 5px 10px
+                overflow hidden
+                text-overflow ellipsis
+                white-space nowrap
+                border-bottom 1px solid rgba(0, 0, 0, .1)
+                color #404040
+                &:hover
+                    color #202020
+                    background-color #f3f3f3
+                    text-decoration none
+                    cursor pointer
+            &:last-child
+                & > a
+                    border-bottom none
+            &.active
+                & > a
+                    color #202020
+                    background-color #e3e3e3
+                    text-decoration none
+                    cursor pointer
+
+.mapboxgl-ctrl-geocoder,
+.mapboxgl-ctrl-geocoder ul
+    box-shadow 0 0 0 2px rgba(0, 0, 0, .1)
+
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl-geocoder ul,
+.mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-geocoder ul
+    top auto
+    bottom 100%
+
+.geocoder-icon
+    display inline-block
+    width 20px
+    height 20px
+    vertical-align middle
+    speak none
+    background-repeat no-repeat
+
+.geocoder-icon-search
+    background-image url(data:image/svg+xml)
+
+.geocoder-icon-close
+    background-image url(data:image/svg+xml)
+
+.geocoder-icon-loading
+    background-image url(data:image/svg+xml)
+    -webkit-animation .4s linear infinite rotate
+    animation .4s linear infinite rotate
+
+.mapboxgl-ctrl-scale
+    background-color unset
