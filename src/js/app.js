@@ -2,6 +2,7 @@
 // Use whatever you like
 const _ = {};
 _.assign = require('lodash.assign');
+_.throttle = require('lodash.throttle');
 
 const d3 = _.assign({},
   require("d3-selection")
@@ -11,17 +12,25 @@ const d3 = _.assign({},
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FkYnVtYmxlYmVlIiwiYSI6ImVCdE9rY28ifQ.iQDg2GpQ5YsZzn4b029Auw'
 const mapboxgl = require('mapbox-gl');
 const MapboxGeocoder = require('mapbox-gl-geocoder');
+const el = document.createElement('div')
+el.className = 'user-marker'
+const marker = new mapboxgl.Marker(el);
+let map;
 
-let usrState = {
-  coords: []
-}
+// Wherewolf stuff
+const Wherewolf = require('wherewolf');
+
+let usrLoc = {}
 
 // Districts data
-const districts = require('../data/districts.json')
+const districts = require('../data/districts.json');
+// Generate new wherewolfe
+var districtWolf = Wherewolf();
+districtWolf.add('oakDistricts', districts)
 
 function init() {
-  // Check USER's location
-  getLocation();
+  // Check USER's location on click
+  d3.select('.locator').on('click', _.throttle(getLocation, 650));
 
   // If yes => reveal map, return district
 
@@ -31,18 +40,21 @@ function init() {
 
   // Instantiate a simple map
   mapboxgl.accessToken = MAPBOX_TOKEN; // replace this with your access token
-  let map = new mapboxgl.Map({
+  map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/sadbumblebee/ckfdingbk0nw819rzn1i53gux',
       center: [-122.2712, 37.8044],
-      zoom: 12
+      zoom: 10.5
     });
 
   // Instantiate geocoder search
   let geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     mapboxgl: mapboxgl,
+    // Restrict to US
     countries: 'us',
+    // Restric bounds to Oakland-ish
+    bbox: [-122.355881,37.632226,-122.114672,37.885368],
     placeholder: 'Enter your location',
     flyTo: false,
     marker: {
@@ -53,10 +65,31 @@ function init() {
     }
   });
 
+  // On result display on map / check voting district
+  geocoder.on('result', (e) => {
+    if (e == null || e == undefined) {
+        console.log('Wrong address')
+    } else {
+        let location = e.result.center
+        usrLoc['lat']  = location[1];
+        usrLoc['lng'] = location[0];
+        setMap(usrLoc);
+    }
+});
+
   // Onload resize handler
   map.on('load', () => {
     // Resize on load
     map.resize();
+    var layers = map.getStyle().layers;
+    // Find the index of the first symbol layer in the map style
+    var firstSymbolId;
+    for (var i = 0; i < layers.length; i++) {
+      if (layers[i].type === 'symbol') {
+        firstSymbolId = layers[i].id;
+        break;
+      }
+    }
 
     map.addSource('districts', {
       type: 'geojson',
@@ -64,27 +97,28 @@ function init() {
     });
 
     map.addLayer({
-      'id': 'districts-line',
-      'type': 'line',
+      'id': 'districts-default',
+      'type': 'fill',
       'source': 'districts',
       'layout': {},
       'paint': {
-        'line-color': '#fff',
-        'line-width': 5,
-        'line-opacity': 0.8
+        'fill-color': '#000',
+        'fill-opacity': 0.2
       }
-    });
+    }, firstSymbolId);
 
     map.addLayer({
-      'id': 'districts-fill',
+      'id': 'districts-selected',
       'type': 'fill',
       'source': 'districts',
       'layout': {},
       'paint': {
         'fill-color': '#088',
-        'fill-opacity': 0.25
-      }
-    });
+        'fill-opacity': 0.45
+      },
+      'filter': ['in', 'id', '']
+    }, firstSymbolId);
+
   });
 // Add geocoder to panel
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
@@ -93,9 +127,9 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 function getLocation() {
 
   function success(position) {
-      usrState.coords['lat']  = parseFloat(position.coords.latitude);
-      usrState.coords['lng'] = parseFloat(position.coords.longitude);
-      setMap(usrState.coords);
+      usrLoc['lat']  = parseFloat(position.coords.latitude);
+      usrLoc['lng'] = parseFloat(position.coords.longitude);
+      setMap(usrLoc);
   }
 
   function error() {
@@ -113,7 +147,38 @@ function getLocation() {
 }
 
 function setMap(coords) {
-  console.log(coords);
+  console.log(coords)
+  let results = districtWolf.find([coords.lng, coords.lat]).oakDistricts;
+  console.log(results);
+  // Add results to page for show
+  let resContainer = d3.select('#results-container')
+  resContainer.select('div')
+    .text(`Your district is ${titleCase(results.fullname)}`)
+
+  // Add marker
+  marker
+    .setLngLat([coords.lng, coords.lat])
+    .addTo(map);
+
+  // Move map to center
+  map.panTo([coords.lng, coords.lat]);
+
+  // Highlight district
+  map.setFilter('districts-selected', [
+    'in',
+    'id',
+    results.id
+  ]);
+}
+
+function titleCase(str) {
+  return str.toLowerCase().split(' ').map( (word) => {
+      if (word.length === 3) {
+          return (word.toUpperCase())
+      } else {
+          return (word.charAt(0).toUpperCase() + word.slice(1));
+      }
+  }).join(' ');
 }
 
 // Bind on-load handler
