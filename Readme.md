@@ -1,7 +1,7 @@
 
-# Pug and stylus based boilerplate using Metalsmith
+# Oakland side guide to voting by district interactive
 
-This app uses Metalsmith to output a basic website. To generate a 'Hello World' page, clone this repo, run `npm install`, then run:
+This app uses Metalsmith to output a basic interactive. To build first run `npm install` and then:
 
     $ make
 
