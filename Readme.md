@@ -1,5 +1,5 @@
 
-# Oakland side guide to voting by district interactive
+# Oaklandside guide to voting by district interactive
 
 This app uses Metalsmith to output a basic interactive. To build first run `npm install` and then:
 
