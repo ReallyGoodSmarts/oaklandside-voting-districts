@@ -1,5 +1,46 @@
 body
-    // background-color pink
+    color #111
+    text-rendering optimizeLegibility
+    margin 32px 0
+
+h1,h2,h3,h4,h5
+    margin 1rem 0
+    font-weight 700
+    line-height 1.2
+
+h1
+    font-family $sans
+    font-size 45px
+
+h2
+    font-family $sans
+    font-size 32.4px
 
 p
-    font-family serif
+    font-family $serif
+    font-size 18px
+    line-height 28.8px
+
+a
+    text-decoration none
+
+.button
+    font-size 12px
+    text-transform uppercase
+    padding 10px 15px
+    background-color $oak-gold
+    font-weight 700
+    font-family $sans
+    border-radius 5px
+    color white
+    cursor pointer
+    transition background 150ms ease-in-out
+    width max-content
+    margin 0 auto
+    text-decoration none
+    &:hover
+        background-color $oak-blue
+
+@media all and (max-width: 720px)
+    .button
+        width 100%

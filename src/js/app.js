@@ -28,6 +28,9 @@ const districts = require('../data/districts.json');
 var districtWolf = Wherewolf();
 districtWolf.add('oakDistricts', districts)
 
+// Oaklandside URL
+const OAK_URL ='https://oaklandside-dev.newspackstaging.com/2020/08/28/welcome-to-election-2020-test/?ifso=cc'
+
 function init() {
   // Check USER's location on click
   d3.select('.locator').on('click', _.throttle(getLocation, 650));
@@ -113,8 +116,8 @@ function init() {
       'source': 'districts',
       'layout': {},
       'paint': {
-        'fill-color': '#088',
-        'fill-opacity': 0.45
+        'fill-color': '#004162',
+        'fill-opacity': 0.75
       },
       'filter': ['in', 'id', '']
     }, firstSymbolId);
@@ -151,9 +154,18 @@ function setMap(coords) {
   let results = districtWolf.find([coords.lng, coords.lat]).oakDistricts;
   console.log(results);
   // Add results to page for show
-  let resContainer = d3.select('#results-container')
-  resContainer.select('div')
-    .text(`Your district is ${titleCase(results.fullname)}`)
+  let resContainer = d3.select('#result')
+  resContainer.append('p')
+    .html(`Your district is ${titleCase(results.fullname)}`)
+
+  resContainer.append('a')
+    .attr('href', `${OAK_URL}${results.name}`)
+    
+  resContainer    
+    .select('a').append('div')
+    .attr('class', 'button')
+    .html('Election info')
+
 
   // Add marker
   marker
