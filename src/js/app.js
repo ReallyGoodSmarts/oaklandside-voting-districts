@@ -8,6 +8,9 @@ const d3 = _.assign({},
   require("d3-selection")
 );
 
+// Pym
+var pymChild = new pym.Child();
+
 // Mapbox stuff
 const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FkYnVtYmxlYmVlIiwiYSI6ImVCdE9rY28ifQ.iQDg2GpQ5YsZzn4b029Auw'
 const mapboxgl = require('mapbox-gl');
@@ -82,6 +85,8 @@ function init() {
 
   // Onload resize handler
   map.on('load', () => {
+    // Adjust height
+    pymChild.sendHeight();
     // Resize on load
     map.resize();
     var layers = map.getStyle().layers;
@@ -181,6 +186,9 @@ function setMap(coords) {
     'id',
     results.id
   ]);
+
+  // Send height
+  pymChild.sendHeight();
 }
 
 function titleCase(str) {

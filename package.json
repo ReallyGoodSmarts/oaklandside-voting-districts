@@ -8,6 +8,7 @@
     "lodash.throttle": "^4.1.1",
     "mapbox-gl": "^1.12.0",
     "mapbox-gl-geocoder": "^2.0.1",
+    "pym.js": "^1.3.2",
     "wherewolf": "^1.0.3"
   },
   "devDependencies": {
