@@ -5,7 +5,7 @@ _.assign = require('lodash.assign');
 _.throttle = require('lodash.throttle');
 
 const d3 = _.assign({},
-  require("d3-selection")
+    require("d3-selection")
 );
 
 const pym = require('pym.js');
@@ -34,7 +34,7 @@ var districtWolf = Wherewolf();
 districtWolf.add('oakDistricts', districts)
 
 // Oaklandside URL
-const OAK_URL ='https://oaklandside-dev.newspackstaging.com/2020/08/28/welcome-to-election-2020-test/?ifso=cc'
+const OAK_URL ='https://oaklandside.org/?page_id=382775&ifso=cc1'
 
 function init() {
   // Check USER's location on click
@@ -52,159 +52,160 @@ function init() {
       zoom: 10.5
     });
 
-  // Instantiate geocoder search
-  let geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-    // Restrict to US
-    countries: 'us',
-    // Restric bounds to Oakland-ish
-    bbox: [-122.355881,37.632226,-122.114672,37.885368],
-    placeholder: 'Enter your location',
-    flyTo: false,
-    marker: {
-        element: '<div class="user-marker"></div>'
-    },
-    setRenderFunction: (item) => {
-        console.log(item)
-    }
-  });
-
-  // On result display on map / check voting district
-  geocoder.on('result', (e) => {
-    if (e == null || e == undefined) {
-        console.log('Wrong address')
-    } else {
-        let location = e.result.center
-        usrLoc['lat']  = location[1];
-        usrLoc['lng'] = location[0];
-        setMap(usrLoc);
-    }
-});
-
-  // Onload resize handler
-  map.on('load', () => {
-    // Adjust height
-    pymChild.sendHeight();
-    // Resize on load
-    map.resize();
-    var layers = map.getStyle().layers;
-    // Find the index of the first symbol layer in the map style
-    var firstSymbolId;
-    for (var i = 0; i < layers.length; i++) {
-      if (layers[i].type === 'symbol') {
-        firstSymbolId = layers[i].id;
-        break;
-      }
-    }
-
-    map.addSource('districts', {
-      type: 'geojson',
-      data: districts
+    // Instantiate geocoder search
+    let geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        // Restrict to US
+        countries: 'us',
+        // Restric bounds to Oakland-ish
+        bbox: [-122.355881,37.632226,-122.114672,37.885368],
+        placeholder: 'Enter your location',
+        flyTo: false,
+        marker: {
+            element: '<div class="user-marker"></div>'
+        },
+        setRenderFunction: (item) => {
+            console.log(item)
+        }
     });
 
-    map.addLayer({
-      'id': 'districts-default',
-      'type': 'fill',
-      'source': 'districts',
-      'layout': {},
-      'paint': {
-        'fill-color': '#000',
-        'fill-opacity': 0.2
-      }
-    }, firstSymbolId);
+    // On result display on map / check voting district
+    geocoder.on('result', (e) => {
+        if (e == null || e == undefined) {
+            console.log('Wrong address')
+        } else {
+            let location = e.result.center
+            usrLoc['lat']  = location[1];
+            usrLoc['lng'] = location[0];
+            setMap(usrLoc);
+        }
+    });
 
-    map.addLayer({
-      'id': 'districts-selected',
-      'type': 'fill',
-      'source': 'districts',
-      'layout': {},
-      'paint': {
-        'fill-color': '#004162',
-        'fill-opacity': 0.75
-      },
-      'filter': ['in', 'id', '']
-    }, firstSymbolId);
+    // Onload resize handler
+    map.on('load', () => {
+    // Adjust height
+        pymChild.sendHeight();
+        // Resize on load
+        map.resize();
+        var layers = map.getStyle().layers;
+        // Find the index of the first symbol layer in the map style
+        var firstSymbolId;
+        for (var i = 0; i < layers.length; i++) {
+            if (layers[i].type === 'symbol') {
+                firstSymbolId = layers[i].id;
+                break;
+            }
+        }
 
-  });
-// Add geocoder to panel
-document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+        map.addSource('districts', {
+            type: 'geojson',
+            data: districts
+        });
+
+        map.addLayer({
+            'id': 'districts-default',
+            'type': 'fill',
+            'source': 'districts',
+            'layout': {},
+            'paint': {
+                'fill-color': '#000',
+                'fill-opacity': 0.2
+            }
+        }, firstSymbolId);
+
+        map.addLayer({
+            'id': 'districts-selected',
+            'type': 'fill',
+            'source': 'districts',
+            'layout': {},
+            'paint': {
+                'fill-color': '#004162',
+                'fill-opacity': 0.75
+            },
+            'filter': ['in', 'id', '']
+        }, firstSymbolId);
+
+    });
+    // Add geocoder to panel
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 }
 
 function getLocation() {
 
-  function success(position) {
-      usrLoc['lat']  = parseFloat(position.coords.latitude);
-      usrLoc['lng'] = parseFloat(position.coords.longitude);
-      setMap(usrLoc);
-  }
+    function success(position) {
+        usrLoc['lat']  = parseFloat(position.coords.latitude);
+        usrLoc['lng'] = parseFloat(position.coords.longitude);
+        setMap(usrLoc);
+    }
 
-  function error() {
-      console.log('Unable to retrieve your location');
-  }
+    function error() {
+        console.log('Unable to retrieve your location');
+    }
 
-  // Check if Available
-  if (!navigator.geolocation) {
-      console.log('Geolocation is not supported by your browser');
-  } else {
-      console.log('Locating…');
-      navigator.geolocation.getCurrentPosition(success, error);
-  }
+    // Check if Available
+    if (!navigator.geolocation) {
+        console.log('Geolocation is not supported by your browser');
+    } else {
+        console.log('Locating…');
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
 
 }
 
 function setMap(coords) {
-  console.log(coords)
-  let results = districtWolf.find([coords.lng, coords.lat]).oakDistricts;
-  console.log(results);
-  // Add results to page for show
-  let resContainer = d3.select('#result')
-  resContainer.append('p')
-    .html(`Your district is ${titleCase(results.fullname)}`)
+    console.log(coords)
+    let results = districtWolf.find([coords.lng, coords.lat]).oakDistricts;
+    console.log(results);
+    // Add results to page for show
+    let resContainer = d3.select('#result')
+    resContainer.append('p')
+        .html(`Your district is ${titleCase(results.fullname)}`)
 
-  resContainer.append('a')
-    .attr('href', `${OAK_URL}${results.name}`)
+    resContainer.append('a')
+        .attr('href', `${OAK_URL}${results.name}`)
+        .attr('target', `_new`)
     
-  resContainer    
-    .select('a').append('div')
-    .attr('class', 'button')
-    .html('Election info')
+    resContainer    
+        .select('a').append('div')
+        .attr('class', 'button')
+        .html('Election info')
 
 
-  // Add marker
-  marker
-    .setLngLat([coords.lng, coords.lat])
-    .addTo(map);
+    // Add marker
+    marker
+        .setLngLat([coords.lng, coords.lat])
+        .addTo(map);
 
-  // Move map to center
-  map.panTo([coords.lng, coords.lat]);
+    // Move map to center
+    map.panTo([coords.lng, coords.lat]);
 
-  // Highlight district
-  map.setFilter('districts-selected', [
-    'in',
-    'id',
-    results.id
-  ]);
+    // Highlight district
+    map.setFilter('districts-selected', [
+        'in',
+        'id',
+        results.id
+    ]);
 
-  // Send height
-  pymChild.sendHeight();
+    // Send height
+    pymChild.sendHeight();
 }
 
 function titleCase(str) {
-  return str.toLowerCase().split(' ').map( (word) => {
-      if (word.length === 3) {
-          return (word.toUpperCase())
-      } else {
-          return (word.charAt(0).toUpperCase() + word.slice(1));
-      }
-  }).join(' ');
+    return str.toLowerCase().split(' ').map( (word) => {
+        if (word.length === 3) {
+            return (word.toUpperCase())
+        } else {
+            return (word.charAt(0).toUpperCase() + word.slice(1));
+        }
+    }).join(' ');
 }
 
 function updateHeight() {
-  pymChild.sendHeight();
-};
+    pymChild.sendHeight();
+}
 
 // Bind on-load handler
 document.addEventListener("DOMContentLoaded", () => {
-  init();
+    init();
 });
