@@ -164,7 +164,7 @@ function setMap(coords) {
 
     resContainer.append('a')
         .attr('href', `${OAK_URL}${results.name}`)
-        .attr('target', `_new`)
+        .attr('target', '_blank')
     
     resContainer    
         .select('a').append('div')
