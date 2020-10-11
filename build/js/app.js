@@ -2500,9 +2500,14 @@ const MAPBOX_TOKEN='pk.eyJ1Ijoic2FkYnVtYmxlYmVlIiwiYSI6ImVCdE9rY28ifQ.iQDg2GpQ5Y
 const Wherewolf=require('wherewolf');let usrLoc={};// Districts data
 const districts=require('../data/districts.json');// Generate new wherewolfe
 var districtWolf=Wherewolf();districtWolf.add('oakDistricts',districts);// Oaklandside URL
+<<<<<<< HEAD
+const OAK_URL='https://oaklandside.org/?page_id=382775&ifso=cc1';function init(){// Check USER's location on click
+d3.select('.locator').on('click',_.throttle(getLocation,650));// window on resize communicates height
+=======
 const OAK_URL='https://oaklandside-dev.newspackstaging.com/2020/08/28/welcome-to-election-2020-test/?ifso=cc';function init(){// Check USER's location on click
 // d3.select('.locator').on('click', _.throttle(getLocation, 650));
 // window on resize communicates height
+>>>>>>> main
 window.onresize=updateHeight;// Instantiate a simple map
 mapboxgl.accessToken=MAPBOX_TOKEN;// replace this with your access token
 map=new mapboxgl.Map({container:'map',style:'mapbox://styles/sadbumblebee/ckfdingbk0nw819rzn1i53gux',center:[-122.2712,37.8044],zoom:10.5});// Instantiate geocoder search
@@ -2516,9 +2521,9 @@ map.resize();var layers=map.getStyle().layers;// Find the index of the first sym
 var firstSymbolId;for(var i=0;i<layers.length;i++){if(layers[i].type==='symbol'){firstSymbolId=layers[i].id;break;}}map.addSource('districts',{type:'geojson',data:districts});map.addLayer({'id':'districts-default','type':'fill','source':'districts','layout':{},'paint':{'fill-color':'#000','fill-opacity':0.2}},firstSymbolId);map.addLayer({'id':'districts-selected','type':'fill','source':'districts','layout':{},'paint':{'fill-color':'#004162','fill-opacity':0.75},'filter':['in','id','']},firstSymbolId);});// Add geocoder to panel
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));}function getLocation(){function success(position){usrLoc['lat']=parseFloat(position.coords.latitude);usrLoc['lng']=parseFloat(position.coords.longitude);setMap(usrLoc);}function error(){console.log('Unable to retrieve your location');}// Check if Available
 if(!navigator.geolocation){console.log('Geolocation is not supported by your browser');}else{console.log('Locating…');navigator.geolocation.getCurrentPosition(success,error);}}function setMap(coords){console.log(coords);let results=districtWolf.find([coords.lng,coords.lat]).oakDistricts;console.log(results);// Add results to page for show
-let resContainer=d3.select('#result');resContainer.append('p').html(`Your district is ${titleCase(results.fullname)}`);resContainer.append('a').attr('href',`${OAK_URL}${results.name}`);resContainer.select('a').append('div').attr('class','button').html('Election info');// Add marker
+let resContainer=d3.select('#result');resContainer.append('p').html(`Your district is ${titleCase(results.fullname)}`);resContainer.append('a').attr('href',`${OAK_URL}${results.name}`).attr('target','_blank');resContainer.select('a').append('div').attr('class','button').html('Election info');// Add marker
 marker.setLngLat([coords.lng,coords.lat]).addTo(map);// Move map to center
 map.panTo([coords.lng,coords.lat]);// Highlight district
 map.setFilter('districts-selected',['in','id',results.id]);// Send height
-pymChild.sendHeight();}function titleCase(str){return str.toLowerCase().split(' ').map(word=>{if(word.length===3){return word.toUpperCase();}else{return word.charAt(0).toUpperCase()+word.slice(1);}}).join(' ');}function updateHeight(){pymChild.sendHeight();};// Bind on-load handler
+pymChild.sendHeight();}function titleCase(str){return str.toLowerCase().split(' ').map(word=>{if(word.length===3){return word.toUpperCase();}else{return word.charAt(0).toUpperCase()+word.slice(1);}}).join(' ');}function updateHeight(){pymChild.sendHeight();}// Bind on-load handler
 document.addEventListener("DOMContentLoaded",()=>{init();});},{"../data/districts.json":55,"d3-selection":1,"lodash.assign":4,"lodash.throttle":6,"mapbox-gl":9,"mapbox-gl-geocoder":8,"pym.js":20,"wherewolf":53}]},{},[56]);
