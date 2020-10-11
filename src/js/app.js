@@ -38,7 +38,7 @@ const OAK_URL ='https://oaklandside-dev.newspackstaging.com/2020/08/28/welcome-t
 
 function init() {
   // Check USER's location on click
-  d3.select('.locator').on('click', _.throttle(getLocation, 650));
+  // d3.select('.locator').on('click', _.throttle(getLocation, 650));
 
   // window on resize communicates height
   window.onresize = updateHeight;
