@@ -4,8 +4,8 @@ include includes/head.pug
     p Enter your home address to find your district and get info about candidates and issues specific to your area.
     .search-container
         #geocoder.geocoder(alt='Type your address here to find your location. We do not save your input.')
-        #locator.locator(alt='This button geolocates you based on your IP address and is prone to error.')
-            span.locator-icon
+        //- #locator.locator(alt='This button geolocates you based on your IP address and is prone to error.')
+        //-     span.locator-icon
     #map(alt='This is a map that shows your location in relation to your voting district')
     #results-container
         #result

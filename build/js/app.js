@@ -2500,8 +2500,14 @@ const MAPBOX_TOKEN='pk.eyJ1Ijoic2FkYnVtYmxlYmVlIiwiYSI6ImVCdE9rY28ifQ.iQDg2GpQ5Y
 const Wherewolf=require('wherewolf');let usrLoc={};// Districts data
 const districts=require('../data/districts.json');// Generate new wherewolfe
 var districtWolf=Wherewolf();districtWolf.add('oakDistricts',districts);// Oaklandside URL
+<<<<<<< HEAD
 const OAK_URL='https://oaklandside.org/?page_id=382775&ifso=cc1';function init(){// Check USER's location on click
 d3.select('.locator').on('click',_.throttle(getLocation,650));// window on resize communicates height
+=======
+const OAK_URL='https://oaklandside-dev.newspackstaging.com/2020/08/28/welcome-to-election-2020-test/?ifso=cc';function init(){// Check USER's location on click
+// d3.select('.locator').on('click', _.throttle(getLocation, 650));
+// window on resize communicates height
+>>>>>>> main
 window.onresize=updateHeight;// Instantiate a simple map
 mapboxgl.accessToken=MAPBOX_TOKEN;// replace this with your access token
 map=new mapboxgl.Map({container:'map',style:'mapbox://styles/sadbumblebee/ckfdingbk0nw819rzn1i53gux',center:[-122.2712,37.8044],zoom:10.5});// Instantiate geocoder search
