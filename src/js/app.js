@@ -8,6 +8,8 @@ const d3 = _.assign({},
   require("d3-selection")
 );
 
+const pym = require('pym.js');
+
 // Pym
 var pymChild = new pym.Child();
 
@@ -38,11 +40,8 @@ function init() {
   // Check USER's location on click
   d3.select('.locator').on('click', _.throttle(getLocation, 650));
 
-  // If yes => reveal map, return district
-
-  // If no => offer map
-
-  // On click on location => refire check USER's location
+  // window on resize communicates height
+  window.onresize = updateHeight;
 
   // Instantiate a simple map
   mapboxgl.accessToken = MAPBOX_TOKEN; // replace this with your access token
@@ -200,6 +199,10 @@ function titleCase(str) {
       }
   }).join(' ');
 }
+
+function updateHeight() {
+  pymChild.sendHeight();
+};
 
 // Bind on-load handler
 document.addEventListener("DOMContentLoaded", () => {
