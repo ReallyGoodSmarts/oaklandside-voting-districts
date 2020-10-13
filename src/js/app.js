@@ -160,7 +160,7 @@ function setMap(coords) {
     // Add results to page for show
     let resContainer = d3.select('#result')
     resContainer.append('p')
-        .html(`Your district is ${titleCase(results.fullname)}`)
+        .html(`You live in Oakland's ${titleCase(results.fullname)}`)
 
     resContainer.append('a')
         .attr('href', `${OAK_URL}${results.name}`)
