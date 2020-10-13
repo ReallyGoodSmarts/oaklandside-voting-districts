@@ -159,6 +159,9 @@ function setMap(coords) {
     console.log(results);
     // Add results to page for show
     let resContainer = d3.select('#result')
+    
+    resContainer.html('')
+    
     resContainer.append('p')
         .html(`You live in Oakland's ${titleCase(results.fullname)}`)
 
