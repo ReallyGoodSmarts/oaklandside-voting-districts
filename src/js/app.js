@@ -14,7 +14,7 @@ const pym = require('pym.js');
 var pymChild = new pym.Child();
 
 // Mapbox stuff
-const MAPBOX_TOKEN = 'pk.eyJ1Ijoic2FkYnVtYmxlYmVlIiwiYSI6ImVCdE9rY28ifQ.iQDg2GpQ5YsZzn4b029Auw'
+const MAPBOX_TOKEN = 'pk.eyJ1IjoicmVhbGx5Z29vZHNtYXJ0cyIsImEiOiJja2c4aGd5ZjEwaGMyMnhvMndvNWg1MXp3In0.tcphVTMgN4J8NjabE1KOSg'
 const mapboxgl = require('mapbox-gl');
 const MapboxGeocoder = require('mapbox-gl-geocoder');
 const el = document.createElement('div')
