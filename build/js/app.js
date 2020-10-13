@@ -2496,7 +2496,7 @@ this.Wherewolf=ww;}})();},{"topojson":52}],54:[function(require,module,exports){
 // Use whatever you like
 const _={};_.assign=require('lodash.assign');_.throttle=require('lodash.throttle');const d3=_.assign({},require("d3-selection"));const pym=require('pym.js');// Pym
 var pymChild=new pym.Child();// Mapbox stuff
-const MAPBOX_TOKEN='pk.eyJ1Ijoic2FkYnVtYmxlYmVlIiwiYSI6ImVCdE9rY28ifQ.iQDg2GpQ5YsZzn4b029Auw';const mapboxgl=require('mapbox-gl');const MapboxGeocoder=require('mapbox-gl-geocoder');const el=document.createElement('div');el.className='user-marker';const marker=new mapboxgl.Marker(el);let map;// Wherewolf stuff
+const MAPBOX_TOKEN='pk.eyJ1IjoicmVhbGx5Z29vZHNtYXJ0cyIsImEiOiJja2c4aGd5ZjEwaGMyMnhvMndvNWg1MXp3In0.tcphVTMgN4J8NjabE1KOSg';const mapboxgl=require('mapbox-gl');const MapboxGeocoder=require('mapbox-gl-geocoder');const el=document.createElement('div');el.className='user-marker';const marker=new mapboxgl.Marker(el);let map;// Wherewolf stuff
 const Wherewolf=require('wherewolf');let usrLoc={};// Districts data
 const districts=require('../data/districts.json');// Generate new wherewolfe
 var districtWolf=Wherewolf();districtWolf.add('oakDistricts',districts);// Oaklandside URL
