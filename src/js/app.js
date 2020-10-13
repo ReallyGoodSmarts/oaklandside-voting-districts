@@ -47,7 +47,7 @@ function init() {
     mapboxgl.accessToken = MAPBOX_TOKEN; // replace this with your access token
     map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/sadbumblebee/ckfdingbk0nw819rzn1i53gux',
+        style: 'mapbox://styles/reallygoodsmarts/ckg8j4gfy0nob19qtx8etlazk',
         center: [-122.2712, 37.8044],
         zoom: 10.5
     });

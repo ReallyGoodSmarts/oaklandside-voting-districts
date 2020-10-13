@@ -2505,7 +2505,7 @@ const OAK_URL='https://oaklandside.org/?page_id=382775&ifso=';function init(){//
 // window on resize communicates height
 window.onresize=updateHeight;// Instantiate a simple map
 mapboxgl.accessToken=MAPBOX_TOKEN;// replace this with your access token
-map=new mapboxgl.Map({container:'map',style:'mapbox://styles/sadbumblebee/ckfdingbk0nw819rzn1i53gux',center:[-122.2712,37.8044],zoom:10.5});// Instantiate geocoder search
+map=new mapboxgl.Map({container:'map',style:'mapbox://styles/reallygoodsmarts/ckg8j4gfy0nob19qtx8etlazk',center:[-122.2712,37.8044],zoom:10.5});// Instantiate geocoder search
 let geocoder=new MapboxGeocoder({accessToken:mapboxgl.accessToken,mapboxgl:mapboxgl,// Restrict to US
 countries:'us',// Restric bounds to Oakland-ish
 bbox:[-122.355881,37.632226,-122.114672,37.885368],placeholder:'Enter your location',flyTo:false,marker:{element:'<div class="user-marker"></div>'},setRenderFunction:item=>{console.log(item);}});// On result display on map / check voting district
