@@ -160,7 +160,8 @@ function setMap(coords) {
     // Add results to page for show
     let resContainer = d3.select('#result')
     
-    resContainer.html('')
+    // clear the container in case it has a previous result
+    resContainer.remove()
     
     resContainer.append('p')
         .html(`You live in Oakland's ${titleCase(results.fullname)}`)
