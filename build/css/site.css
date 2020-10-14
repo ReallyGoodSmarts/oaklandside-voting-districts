@@ -511,11 +511,8 @@ a {
 }
 #results-container {
   text-align: center;
-  padding: 35px 0;
-}
-.result {
+  margin: 0 0 20px;
   font-family: Georgia, serif;
   font-weight: 400;
   font-size: 22px;
-  color: #088;
 }
