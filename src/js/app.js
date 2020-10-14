@@ -162,6 +162,17 @@ function setMap(coords) {
         
     // Empty contents of resContainer
     resContainer.html('')
+    
+    // Catch a non-oakland address
+    if (!results || results.length == 0) {
+        resContainer.append('p')
+            .html(`We couldn't find that address in Oakland. Try another?`)
+        
+        // Send height
+        pymChild.sendHeight();    
+        
+        return
+    }
         
     resContainer.append('p')
         .html(`You live in Oakland's ${titleCase(results.fullname)}`)

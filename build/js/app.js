@@ -2517,7 +2517,9 @@ var firstSymbolId;for(var i=0;i<layers.length;i++){if(layers[i].type==='symbol')
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));}function getLocation(){function success(position){usrLoc['lat']=parseFloat(position.coords.latitude);usrLoc['lng']=parseFloat(position.coords.longitude);setMap(usrLoc);}function error(){console.log('Unable to retrieve your location');}// Check if Available
 if(!navigator.geolocation){console.log('Geolocation is not supported by your browser');}else{console.log('Locating…');navigator.geolocation.getCurrentPosition(success,error);}}function setMap(coords){console.log(coords);let results=districtWolf.find([coords.lng,coords.lat]).oakDistricts;console.log(results);// Add results to page for show
 let resContainer=d3.select('#results-container');// Empty contents of resContainer
-resContainer.html('');resContainer.append('p').html(`You live in Oakland's ${titleCase(results.fullname)}`);resContainer.append('a').attr('href',`${OAK_URL}${results.name}`).attr('target','_blank');resContainer.select('a').append('div').attr('class','button').html('Election info');// Add marker
+resContainer.html('');// Catch a non-oakland address
+if(!results||results.length==0){resContainer.append('p').html(`We couldn't find that address in Oakland. Try another?`);// Send height
+pymChild.sendHeight();return;}resContainer.append('p').html(`You live in Oakland's ${titleCase(results.fullname)}`);resContainer.append('a').attr('href',`${OAK_URL}${results.name}`).attr('target','_blank');resContainer.select('a').append('div').attr('class','button').html('Election info');// Add marker
 marker.setLngLat([coords.lng,coords.lat]).addTo(map);// Move map to center
 map.panTo([coords.lng,coords.lat]);// Highlight district
 map.setFilter('districts-selected',['in','id',results.id]);// Send height
