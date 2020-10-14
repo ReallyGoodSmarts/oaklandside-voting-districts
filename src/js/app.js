@@ -158,7 +158,7 @@ function setMap(coords) {
     let results = districtWolf.find([coords.lng, coords.lat]).oakDistricts;
     console.log(results);
     // Add results to page for show
-    let resContainer = d3.select('#result')
+    let resContainer = d3.select('#results-container')
         
     // Empty contents of resContainer
     resContainer.html('')

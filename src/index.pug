@@ -1,12 +1,13 @@
 include includes/head.pug
 #app-container(alt='This application figures out your voting district in Oakland based on your location. You can either input your location or you can let us figure it out for you through geolocation.')
     h2 Who represents you in Oakland?
-    p Enter your home address to learn what's happening in your district.
+    #results-container
+        #result
+            p Enter your home address to learn what's happening in your district.
     .search-container
         #geocoder.geocoder(alt='Type your address here to find your location. We do not save your input.')
         //- #locator.locator(alt='This button geolocates you based on your IP address and is prone to error.')
         //-     span.locator-icon
     #map(alt='This is a map that shows your location in relation to your voting district')
-    #results-container
-        #result
+
 include includes/footer.pug
